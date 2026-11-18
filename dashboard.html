@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Payroll System - Dashboard</title>
+    <!-- External CSS stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Employee and Payroll Management System</h1>
+        <p>Welcome to the Main Dashboard</p>
+        <a href="login.html">Logout</a>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="employees.html">Employee Records</a>
+        <a href="departments.html">Departments</a>
+        <a href="salaries.html">Salaries</a>
+        <a href="payroll.html">Payroll</a>
+        <a href="roles.html">Role-Based Access</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <section id="dashboard-overview">
+            <h2>Dashboard Overview</h2>
+            <p>Live summary of your system records:</p>
+
+            <!-- Stat Card: Total Employees -->
+            <div class="stat-card">
+                <h3>Total Employees</h3>
+                <p id="dash-total-emp">0</p>
+            </div>
+
+            <!-- Stat Card: Total Departments -->
+            <div class="stat-card">
+                <h3>Total Departments</h3>
+                <p id="dash-total-dept">0</p>
+            </div>
+
+            <!-- Stat Card: Salary Records -->
+            <div class="stat-card">
+                <h3>Salary Records</h3>
+                <p id="dash-total-sal">0</p>
+            </div>
+
+            <!-- Stat Card: Pending Payroll -->
+            <div class="stat-card">
+                <h3>Pending Payroll</h3>
+                <p id="dash-pending-pay">0</p>
+            </div>
+        </section>
+
+        <!-- Dashboard Reset / Clear Data Section -->
+        <section style="text-align: center; margin-top: 20px; padding: 15px;">
+            <h3>System Data Control</h3>
+            <p>If you want to clear all records and reset the dashboard to zero, click the button below:</p>
+            <!-- Reset Button with red styling -->
+            <button onclick="resetDashboardData()" style="background-color: #d9534f; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                Reset Dashboard (Clear All Data)
+            </button>
+        </section>
+    </main>
+
+    <!-- Footer Section with Developer Name -->
+    <footer>
+        <p>&copy; 2026 Employee and Payroll Management System</p>
+        <p style="font-size: 13px; margin-top: 5px;">Developed by <strong>Kainat Saleem</strong> (Roll No: INFT241101109)</p>
+    </footer>
+
+    <!-- JavaScript Code for Dashboard Live Stats & Reset Functionality -->
+    <script>
+        // Page load hotay hi localStorage se data utha kar stats update karna
+        window.onload = function() {
+            loadDashboardStats();
+        };
+
+        function loadDashboardStats() {
+            // LocalStorage se data lena (agar data na ho to empty array [])
+            let employees = JSON.parse(localStorage.getItem('employees')) || [];
+            let departments = JSON.parse(localStorage.getItem('departments')) || [];
+            let salaries = JSON.parse(localStorage.getItem('salaries')) || [];
+            let payrolls = JSON.parse(localStorage.getItem('payrolls')) || [];
+
+            // Dashboard ke cards mein numbers show karna
+            document.getElementById('dash-total-emp').textContent = employees.length;
+            document.getElementById('dash-total-dept').textContent = departments.length;
+            document.getElementById('dash-total-sal').textContent = salaries.length;
+
+            // Sirf 'Pending' status walay payrolls ko count karna
+            const pendingCount = payrolls.filter(p => p.status === 'Pending').length;
+            document.getElementById('dash-pending-pay').textContent = pendingCount;
+        }
+
+        // Reset Button ka function jo saara data zero kar dega
+        function resetDashboardData() {
+            if (confirm('Kya aap waqayi apna saara data clear karke dashboard ko zero karna chahti hain?')) {
+                // Browser ka localStorage poori tarah clear karna
+                localStorage.clear();
+                
+                // Stats ko foran zero par update karna
+                document.getElementById('dash-total-emp').textContent = 0;
+                document.getElementById('dash-total-dept').textContent = 0;
+                document.getElementById('dash-total-sal').textContent = 0;
+                document.getElementById('dash-pending-pay').textContent = 0;
+
+                alert('Dashboard has been reset successfully! All records cleared.');
+            }
+        }
+    </script>
+</body>
+</html>

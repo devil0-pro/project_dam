@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role-Based Access - Payroll System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Employee and Payroll Management System</h1>
+        <p>Role-Based Access Control</p>
+        <a href="login.html">Logout</a>
+    </header>
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="employees.html">Employee Records</a>
+        <a href="departments.html">Departments</a>
+        <a href="salaries.html">Salaries</a>
+        <a href="payroll.html">Payroll</a>
+        <a href="roles.html" class="active">Role-Based Access</a>
+    </nav>
+
+    <main>
+        <section>
+            <h2>Role-Based Access Control</h2>
+            <p>Different system users have different access permissions.</p>
+
+            <table border="1">
+                <tr>
+                    <th>User Role</th>
+                    <th>Permissions</th>
+                </tr>
+                <tr>
+                    <td>Admin</td>
+                    <td>Can manage employees, departments, salaries, payroll and user roles.</td>
+                </tr>
+                <tr>
+                    <td>HR Manager</td>
+                    <td>Can manage employee records and departments.</td>
+                </tr>
+                <tr>
+                    <td>Employee</td>
+                    <td>Can view personal details and salary information.</td>
+                </tr>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Employee and Payroll Management System</p>
+        <p style="font-size: 13px; margin-top: 5px;">Developed by <strong>Kainat Saleem</strong> (Roll No: INFT241101109)</p>
+    </footer>
+
+</body>
+</html>

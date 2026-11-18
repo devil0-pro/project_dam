@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Payroll System - Login</title>
+    <!-- External CSS stylesheet link -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Employee and Payroll Management System</h1>
+        <p>Welcome to Employee Management Portal</p>
+    </header>
+
+    <!-- Main Login Container -->
+    <main>
+        <section>
+            <h2>Login to Your Account</h2>
+            <p>Please enter your login details below.</p>
+
+            <!-- Login Form redirecting to Dashboard -->
+            <form action="dashboard.html" method="get">
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <div>
+                    <label for="role">Select Your Role:</label>
+                    <select id="role" name="role" required>
+                        <option value="">Choose Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="hr">HR Manager</option>
+                        <option value="employee">Employee</option>
+                    </select>
+                </div>
+
+                <button type="submit">Login</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer Section with Developer Name -->
+    <footer>
+        <p>&copy; 2026 Employee and Payroll Management System</p>
+        <p style="font-size: 13px; margin-top: 5px;">Developed by <strong>Kainat Saleem</strong> (Roll No: INFT241101109)</p>
+    </footer>
+
+</body>
+</html>

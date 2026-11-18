@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salaries - Payroll System</title>
+    <!-- External CSS stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Employee and Payroll Management System</h1>
+        <p>Salary Management</p>
+        <a href="login.html">Logout</a>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="employees.html">Employee Records</a>
+        <a href="departments.html">Departments</a>
+        <a href="salaries.html" class="active">Salaries</a>
+        <a href="payroll.html">Payroll</a>
+        <a href="roles.html">Role-Based Access</a>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+        <section>
+            <h2>Salary Management</h2>
+            <p>Manage employee salary details, allowances, and bonuses below.</p>
+
+            <!-- Connected directly to backend.php -->
+            <form action="backend.php" method="POST">
+                <input type="hidden" name="action" value="add_salary">
+
+                <div>
+                    <label for="salaryemp">Employee ID:</label>
+                    <input type="text" id="salaryemp" name="emp_id" placeholder="e.g. 7 or EMP001" required>
+                </div>
+
+                <div>
+                    <label for="basicsalary">Basic Salary:</label>
+                    <input type="number" id="basicsalary" name="basic" placeholder="Enter Basic Salary" required>
+                </div>
+
+                <div>
+                    <label for="allowance">Allowance:</label>
+                    <input type="number" id="allowance" name="allowance" placeholder="Enter Allowance (e.g. 5000)">
+                </div>
+
+                <div>
+                    <label for="bonus">Bonus:</label>
+                    <input type="number" id="bonus" name="bonus" placeholder="Enter Bonus (e.g. 2000)">
+                </div>
+
+                <div>
+                    <label for="deduction">Deduction:</label>
+                    <input type="number" id="deduction" name="deduction" placeholder="Enter Deduction (e.g. 1000)">
+                </div>
+
+                <button type="submit">Save Salary</button>
+            </form>
+
+            <h3>Saved Salary Records</h3>
+            <!-- Table with ID for dynamic rows population -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Basic Salary</th>
+                        <th>Allowance</th>
+                        <th>Bonus</th>
+                        <th>Deduction</th>
+                        <th>Net Salary</th>
+                    </tr>
+                </thead>
+                <tbody id="salaryTableBody">
+                    <!-- Live rows from MySQL database will appear here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Footer Section with Developer Name -->
+    <footer>
+        <p>&copy; 2026 Employee and Payroll Management System</p>
+        <p style="font-size: 13px; margin-top: 5px;">Developed by <strong>Kainat Saleem</strong> (Roll No: INFT241101109)</p>
+    </footer>
+
+    <!-- Fetch Live Data Directly from backend.php -->
+    <script>
+        fetch('backend.php?fetch=salaries')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById('salaryTableBody');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No salary records found in database.</td></tr>';
+                    return;
+                }
+
+                data.forEach(sal => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${sal.emp_id}</td>
+                            <td>${sal.basic}</td>
+                            <td>${sal.allowance}</td>
+                            <td>${sal.bonus}</td>
+                            <td>${sal.deduction}</td>
+                            <td>${sal.net_salary}</td>
+                        </tr>
+                    `;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>

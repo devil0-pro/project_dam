@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments - Payroll System</title>
+    <!-- External CSS stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Employee and Payroll Management System</h1>
+        <p>Department Management</p>
+        <a href="login.html">Logout</a>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="employees.html">Employee Records</a>
+        <a href="departments.html" class="active">Departments</a>
+        <a href="salaries.html">Salaries</a>
+        <a href="payroll.html">Payroll</a>
+        <a href="roles.html">Role-Based Access</a>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+        <section>
+            <h2>Departments</h2>
+            <p>Create and manage company departments below.</p>
+
+            <!-- Connected directly to backend.php -->
+            <form action="backend.php" method="POST">
+                <input type="hidden" name="action" value="add_department">
+
+                <div>
+                    <label for="deptid">Department ID:</label>
+                    <input type="text" id="deptid" name="dept_id" placeholder="e.g. 1 or D01" required>
+                </div>
+
+                <div>
+                    <label for="deptname">Department Name:</label>
+                    <input type="text" id="deptname" name="dept_name" placeholder="Enter Department Name" required>
+                </div>
+
+                <div>
+                    <label for="manager">Department Manager:</label>
+                    <input type="text" id="manager" name="manager" placeholder="Enter Manager Name" required>
+                </div>
+
+                <button type="submit">Add Department</button>
+            </form>
+
+            <h3>Department List</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Department ID</th>
+                        <th>Department Name</th>
+                        <th>Manager</th>
+                    </tr>
+                </thead>
+                <tbody id="departmentTableBody">
+                    <!-- Live rows from MySQL database will appear here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Footer Section with Developer Name -->
+    <footer>
+        <p>&copy; 2026 Employee and Payroll Management System</p>
+        <p style="font-size: 13px; margin-top: 5px;">Developed by <strong>Kainat Saleem</strong> (Roll No: INFT241101109)</p>
+    </footer>
+
+    <!-- Fetch Live Data Directly from backend.php -->
+    <script>
+        fetch('backend.php?fetch=departments')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById('departmentTableBody');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No departments found in database.</td></tr>';
+                    return;
+                }
+
+                data.forEach(dept => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${dept.id}</td>
+                            <td>${dept.name}</td>
+                            <td>${dept.manager}</td>
+                        </tr>
+                    `;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>

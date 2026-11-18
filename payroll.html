@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll - Payroll System</title>
+    <!-- External CSS stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Employee and Payroll Management System</h1>
+        <p>Payroll Management</p>
+        <a href="login.html">Logout</a>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="employees.html">Employee Records</a>
+        <a href="departments.html">Departments</a>
+        <a href="salaries.html">Salaries</a>
+        <a href="payroll.html" class="active">Payroll</a>
+        <a href="roles.html">Role-Based Access</a>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+        <section>
+            <h2>Payroll Management</h2>
+            <p>Generate and manage monthly employee payroll below.</p>
+
+            <!-- Connected directly to backend.php -->
+            <form action="backend.php" method="POST">
+                <input type="hidden" name="action" value="add_payroll">
+
+                <div>
+                    <label for="payemp">Employee ID:</label>
+                    <input type="text" id="payemp" name="emp_id" placeholder="e.g. 7 or EMP001" required>
+                </div>
+
+                <div>
+                    <label for="month">Payroll Month:</label>
+                    <input type="text" id="month" name="month" placeholder="e.g. November 2026" required>
+                </div>
+
+                <div>
+                    <label for="paymentdate">Payment Date:</label>
+                    <input type="date" id="paymentdate" name="payment_date" required>
+                </div>
+
+                <div>
+                    <label for="paystatus">Payment Status:</label>
+                    <select id="paystatus" name="status" required>
+                        <option value="Paid">Paid</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+
+                <button type="submit">Generate Payroll</button>
+            </form>
+
+            <h3>Payroll Records</h3>
+            <!-- Table with ID for dynamic rows population -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Month</th>
+                        <th>Payment Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="payrollTableBody">
+                    <!-- Live rows from MySQL database will appear here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Footer Section with Developer Name -->
+    <footer>
+        <p>&copy; 2026 Employee and Payroll Management System</p>
+        <p style="font-size: 13px; margin-top: 5px;">Developed by <strong>Kainat Saleem</strong> (Roll No: INFT241101109)</p>
+    </footer>
+
+    <!-- Fetch Live Data Directly from backend.php -->
+    <script>
+        fetch('backend.php?fetch=payroll')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById('payrollTableBody');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No payroll records found in database.</td></tr>';
+                    return;
+                }
+
+                data.forEach(pay => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${pay.emp_id}</td>
+                            <td>${pay.month}</td>
+                            <td>${pay.payment_date}</td>
+                            <td>${pay.status}</td>
+                        </tr>
+                    `;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
